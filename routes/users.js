@@ -17,6 +17,7 @@ router.get('/:id', (req, res) => {
     res.status(200).send(user)
 })
 
+
 router.post('', (req, res) => {
     const user = {
         id : users.length + 1,
@@ -52,7 +53,14 @@ router.put('/:id', (req, res) => {
 
 })
 
-// slice vs splice
+
+router.post('/authenticate', (req, res) => {
+    const user = users.find(u => u.email === req.body.email && u.password === req.body.password)
+    if (!user) return res.status(404).send(`Cannot find user with id ${req.body.email}`)
+    return res.status(200).send(user)
+})
+
+
 router.delete('/:id', (req, res) => {
     const user = users.find(u => u.id === parseInt(req.params.id))
 
